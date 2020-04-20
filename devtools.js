@@ -51,7 +51,7 @@ chrome.devtools.network.onRequestFinished.addListener(function (request) {
 
 /* -------------------------- EXTRA PANEL CREATION IN DEVELOPER TOOLS  -------------------------- */
 
-chrome.devtools.panels.create("My Panel",
+chrome.devtools.panels.create("traceIn",
     "MyPanelIcon.png",
     "Panel.html",
     function (panel) {
