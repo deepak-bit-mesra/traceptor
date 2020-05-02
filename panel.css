@@ -1,0 +1,31 @@
+.body {
+    color: #9fa0a4;
+    /* background-color: #212529; */
+    background-color: inherit;
+}
+
+.colorInherit {
+    /* color: darkgray; */
+    color: inherit;
+}
+
+.colorspringgreen {
+    color: springgreen;
+}
+
+.table a {
+    color: springgreen;
+
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td,
+th,
+tr {
+    border-bottom: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}

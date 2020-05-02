@@ -29,7 +29,40 @@ $(document).ready(function () {
             console.log("tab created and opener is ",tab);
             
         });
-    })
+    });
+
+
+
+    chrome.storage.onChanged.addListener(function (changes,namespace) {
+        
+        for(let key in changes){
+            if(key == "checked_status"){
+                if(changes[key].newValue==true){
+                    console.log("Popup JS : Checked Status = ",true);
+                    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                        chrome.tabs.executeScript(
+                            tabs[0].id,
+                            {code: 'document.body.style.border = "2px solid springgreen";'}
+                        );
+                    });
+                }
+                    
+                else{
+                    console.log("Popup JS : Checked Status = ",false);
+                    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                        chrome.tabs.executeScript(
+                            tabs[0].id,
+                            {code: 'document.body.style.border = "0px solid springgreen";'}
+                        );
+                    });
+                }
+                
+            }
+            else{
+                console.log("Popup JS : Some Other Key");
+            }
+        }
+    });
 });
 
 

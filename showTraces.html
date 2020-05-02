@@ -3,33 +3,37 @@
 
 <head>
   <link rel="stylesheet" href="library/bootstrap.min.css">
+  <link rel="stylesheet" href="panel.css">
+
   <script src="./library/jquery.min.js"></script>
   <script src="./library/popper.min.js"></script>
   <script src="./library/bootstrap.min.js"></script>
 
-  
+
 </head>
 
-<body>
-    <div class="container">
-        <h2>Trace Entries</h2>
-        <p>By Clicking on the TraceId , User should navigate to Kibana Dashboard with log Entries associated to Trace Id </p>            
-        <table class="table" id="dataTable">
-          <thead>
-            <tr>
-              <th>Trace Id</th>
-              <th>SpanId</th>
-              <th>URL</th>
-            </tr>
-          </thead>
-          <tbody id="dataTbody">
-            
-          </tbody>
-        </table>
+<body class="body">
+  <div class="container">
+    <h2>Trace Entries</h2>
+    <p>By Clicking on the TraceId , User should navigate to Kibana Dashboard with log Entries associated to Trace Id
+    </p>
+    <table class="table colordimgrey" id="dataTable">
+      <thead>
+        <tr>
+          <th>Trace Id</th>
+          <th>SpanId</th>
+          <th>Status</th>
+          <th>URL</th>
+        </tr>
+      </thead>
+      <tbody id="dataTbody">
+
+      </tbody>
+    </table>
 
 
 
-  <script src="showTraces.js"></script>
+    <script src="showTraces.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,9 @@
 console.log("This is console for devtools.html");
 console.log("tabId:- ", chrome.devtools.inspectedWindow.tabId)
 
-
+let config = {
+    url: "/catalog/trace/"
+};
 
 
 /* -------------------------- MESSAGE HANDLING  -------------------------- */
@@ -26,27 +28,29 @@ chrome.runtime.onMessage.addListener(
 
 
 chrome.devtools.network.onRequestFinished.addListener(function (request) {
-        if (request.request.url.includes("/catalog/trace/")){
-            console.log("Request = ", request);
-            try{ 
-                chrome.storage.sync.get(["checked_status"],function(result){
-                    if(result.checked_status)
-                        updateTraceInfo(request);
-                    else 
-                        console.log("Please Turn on Record Button to Start Recording.");
-                });
-            }
-            catch(e){
-                console.log(e);
-                window.alert(e);
-            }
+    if (request.request.url.includes(config.url)) {
+        console.log("Request = ", request);
+        try {
+            chrome.storage.sync.get(["checked_status"], function (result) {
+                if (result.checked_status)
+                    updateTraceInfo(request);
+                else
+                    console.log("Please Turn on Record Button to Start Recording.");
+            });
+        } catch (e) {
+            console.log(e);
+            window.alert(e);
         }
-        else
-            console.log("The Request is to Some other Remote Host");
-    
-    
-    
+    } else
+        console.log("The Request is to Some other Remote Host");
+
+
+
 });
+
+
+/* -------------------------- NETWORK REQUEST HANDLING by WEBREQUEST  -------------------------- */
+
 
 
 /* -------------------------- EXTRA PANEL CREATION IN DEVELOPER TOOLS  -------------------------- */
@@ -82,7 +86,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 /* -------------------------- FUNCTIONS  -------------------------- */
 
 function updateTraceInfo(request) {
-    if (request.request.url.includes("/catalog/trace/")) {//Just An Extra Check
+    if (request.request.url.includes(config.url)) { //Just An Extra Check
         let traceObj = getTraceObj(request);
         pushTraceObj(traceObj);
         chrome.storage.sync.get(['traceArr'], function (result) {
@@ -96,14 +100,16 @@ function updateTraceInfo(request) {
 
 function getTraceObj(request) {
     let traceObj = {};
-    if (request.request.url.includes("/catalog/trace/")) {
+    if (request.request.url.includes(config.url)) {
         traceObj["url"] = request.request.url;
+        traceObj["status"] = request.response.status;
         for (head of request.response.headers) {
             if (head["name"] === "X-B3-TraceId") {
                 traceObj["X-B3-TraceId"] = head["value"];
             } else if (head["name"] === "X-B3-SpanId") {
                 traceObj["X-B3-SpanId"] = head["value"];
             }
+            
         }
     }
     return traceObj;

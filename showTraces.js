@@ -8,10 +8,11 @@ $(document).ready(function () {
         $.each(result['traceArr'], function (index, value) {
             console.log("index = ", index);
             console.log(" value = ", value);
-            let link = "http://localhost:5601/app/infra#/logs/stream?logFilter=(expression:'"+value['X-B3-TraceId']+"',kind:kuery)";
+            let link = "http://localhost:5601/app/infra#/logs/stream?logFilter=(expression:'" + value['X-B3-TraceId'] + "',kind:kuery)";
             let tr = '<tr>' +
-                '<td><a href="'+link+'">' + value['X-B3-TraceId'] + '</a></td>' +
+                '<td><a href="' + link + '">' + value['X-B3-TraceId'] + '</a></td>' +
                 '<td>' + value['X-B3-SpanId'] + '</td>' +
+                '<td>' + value.status + '</td>' +
                 '<td>' + value.url + '</td>' +
                 '</tr>';
             htmlContent += tr;
