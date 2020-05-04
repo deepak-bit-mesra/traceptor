@@ -13,10 +13,10 @@
     color: springgreen;
 }
 
-.table a {
+/* .table a {
     color: springgreen;
 
-}
+} */
 
 table {
     border-collapse: collapse;
@@ -28,4 +28,11 @@ tr {
     border-bottom: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+}
+
+._200 {
+    color: springgreen;
+}
+._500{
+    color:red;
 }

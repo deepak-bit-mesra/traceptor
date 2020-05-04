@@ -16,15 +16,7 @@ $(document).ready(function () {
         $.each(result['traceArr'], function (index, value) {
             console.log("index = ", index);
             console.log(" value = ", value);
-            let link = "http://localhost:5601/app/infra#/logs/stream?logFilter=(expression:'" + value['X-B3-TraceId'] + "',kind:kuery)";
-            let tr = '<tr>' +
-                '<td>'+index+'</td>'+
-                '<td><a href="' + link + '" target="_blank">' + value['X-B3-TraceId'] + '</a></td>' +
-                '<td>' + value['X-B3-SpanId'] + '</td>' +
-                '<td>' + value.status + '</td>' +
-                '<td>' + value.url + '</td>' +
-                '</tr>';
-            htmlContent += tr;
+            htmlContent += getTrAsString(index, value);
 
         });
         $("#dataTbody")[0].innerHTML = htmlContent;
@@ -41,31 +33,30 @@ $(document).ready(function () {
                 namespace,
                 storageChange.oldValue,
                 storageChange.newValue);
-            if(key=="traceArr"){
-                let lastIndex = storageChange.newValue.length-1;
-                let value = storageChange.newValue[lastIndex];
-                let link = "http://localhost:5601/app/infra#/logs/stream?logFilter=(expression:'" + value['X-B3-TraceId'] + "',kind:kuery)";
-                let tr = '<tr>' +
-                    '<td>'+lastIndex+'</td>'+
-                    '<td><a href="' + link + '" target="_blank">' + value['X-B3-TraceId'] + '</a></td>' +
-                    '<td>' + value['X-B3-SpanId'] + '</td>' +
-                    '<td>' + value.url + '</td>' +
-                    '<td>' + value.status + '</td>' +
-                    '</tr>';
-                    $("#dataTbody")[0].innerHTML += tr;
+            if (key == "traceArr") {
+                let index = storageChange.newValue.length - 1;
+                let value = storageChange.newValue[index];
+                $("#dataTbody")[0].innerHTML += getTrAsString(index, value);
             }
-            
-    
-            
-            
-    
-    
             console.info('Panel JS: New result["traceArr"] = ', storageChange.newValue);
-    
-    
+
+
         }
     });
 
 
 
 });
+
+function getTrAsString(index, value) {
+    let link = "http://localhost:5601/app/infra#/logs/stream?logFilter=(expression:'" + value['X-B3-TraceId'] + "',kind:kuery)";
+    let tr = '<tr>' +
+        '<td>' + index + '</td>' +
+        '<td  ><a ' + 'class=_' + value.status + ' href="' + link + '" target="_blank">' + value['X-B3-TraceId'] + '</a></td>' +
+        '<td>' + value['X-B3-SpanId'] + '</td>' +
+        '<td>' + value.url + '</td>' +
+        '<td>' + value.status + '</td>' +
+        '</tr>';
+    return tr;
+
+}
