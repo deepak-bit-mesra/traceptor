@@ -55,7 +55,7 @@ chrome.devtools.network.onRequestFinished.addListener(function (request) {
 
 /* -------------------------- EXTRA PANEL CREATION IN DEVELOPER TOOLS  -------------------------- */
 
-chrome.devtools.panels.create("traceIn",
+chrome.devtools.panels.create("Traceptor",
     "MyPanelIcon.png",
     "Panel.html",
     function (panel) {
@@ -109,7 +109,7 @@ function getTraceObj(request) {
             } else if (head["name"] === "X-B3-SpanId") {
                 traceObj["X-B3-SpanId"] = head["value"];
             }
-            
+
         }
     }
     return traceObj;
